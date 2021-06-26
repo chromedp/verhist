@@ -174,7 +174,7 @@ func WithTransport(transport http.RoundTripper) Option {
 	}
 }
 
-// WithLogf is a transmission rpc client option to set a log handler for HTTP
+// WithLogf is a omaha proxy client option to set a log handler for HTTP
 // requests and responses.
 func WithLogf(logf interface{}, opts ...httplog.Option) Option {
 	return func(cl *Client) {

@@ -9,17 +9,17 @@ import (
 )
 
 // Recent returns the recent release information from the omaha proxy.
-func Recent(opts ...Option) ([]Release, error) {
-	return New(opts...).Recent(context.Background())
+func Recent(ctx context.Context, opts ...Option) ([]Release, error) {
+	return New(opts...).Recent(ctx)
 }
 
 // Entries returns the latest version entries from the omaha proxy.
-func Entries(opts ...Option) ([]VersionEntry, error) {
-	return New(opts...).Entries(context.Background())
+func Entries(ctx context.Context, opts ...Option) ([]VersionEntry, error) {
+	return New(opts...).Entries(ctx)
 }
 
 // Latest retrieves the latest version for the specified os and channel from
 // the omaha proxy.
-func Latest(os, channel string, opts ...Option) (Version, error) {
-	return New(opts...).Latest(context.Background(), os, channel)
+func Latest(ctx context.Context, os, channel string, opts ...Option) (Version, error) {
+	return New(opts...).Latest(ctx, os, channel)
 }

@@ -1,4 +1,4 @@
-module github.com/chromedp/omahaproxy
+module github.com/chromedp/verhist
 
 go 1.20
 

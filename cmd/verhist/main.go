@@ -30,11 +30,11 @@ func run(ctx context.Context, w io.Writer, latest bool, platform, channel string
 	case len(versions) < 1:
 		return verhist.ErrNoVersionsReturned
 	}
-	var v interface{} = versions
 	if latest {
-		v = versions[0]
+		_, err := fmt.Fprintf(w, "%s\n", versions[0].Version)
+		return err
 	}
 	enc := json.NewEncoder(w)
 	enc.SetIndent("", "  ")
-	return enc.Encode(v)
+	return enc.Encode(versions)
 }

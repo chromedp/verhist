@@ -257,18 +257,20 @@ type Version struct {
 
 // UserAgent builds a user agent for the platform.
 func (ver Version) UserAgent(platform string) string {
-	typ := "Windows NT 10.0; Win64; x64"
+	typ, extra := "Windows NT 10.0; Win64; x64", ""
 	switch strings.ToLower(platform) {
 	case "linux":
 		typ = "X11; Linux x86_64"
 	case "mac", "mac_arm64":
 		typ = "Macintosh; Intel Mac OS X 10_15_7"
+	case "android":
+		typ, extra = "Linux; Android 10; K", " Mobile"
 	}
 	v := "120.0.0.0"
 	if i := strings.Index(ver.Version, "."); i != -1 {
 		v = ver.Version[:i] + ".0.0.0"
 	}
-	return fmt.Sprintf("Mozilla/5.0 (%s) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/%s Safari/537.36", typ, v)
+	return fmt.Sprintf("Mozilla/5.0 (%s) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/%s%s Safari/537.36", typ, v, extra)
 }
 
 // Option is a version history client option.

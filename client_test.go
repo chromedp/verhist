@@ -62,11 +62,16 @@ func TestLatest(t *testing.T) {
 	if os.Getenv("VERBOSE") != "" {
 		opts = append(opts, WithLogf(t.Logf))
 	}
-	latest, err := Latest(context.Background(), "win", "stable", opts...)
-	if err != nil {
-		t.Fatalf("expected no error, got: %v", err)
+	for _, channel := range []string{"stable", "beta", "dev"} {
+		t.Run(channel, func(t *testing.T) {
+			t.Parallel()
+			latest, err := Latest(context.Background(), "win64", channel, opts...)
+			if err != nil {
+				t.Fatalf("expected no error, got: %v", err)
+			}
+			t.Logf("name: %s version: %s", latest.Name, latest.Version)
+		})
 	}
-	t.Logf("name: %s version: %s", latest.Name, latest.Version)
 }
 
 func TestUserAgent(t *testing.T) {
@@ -75,14 +80,19 @@ func TestUserAgent(t *testing.T) {
 	if os.Getenv("VERBOSE") != "" {
 		opts = append(opts, WithLogf(t.Logf))
 	}
-	userAgent, err := UserAgent(context.Background(), "linux", "stable", opts...)
-	switch {
-	case err != nil:
-		t.Fatalf("expected no error, got: %v", err)
-	case userAgent == "":
-		t.Errorf("expected non-empty user agent")
+	for _, platform := range []string{"win64", "mac_arm64", "linux", "android"} {
+		t.Run(platform, func(t *testing.T) {
+			t.Parallel()
+			userAgent, err := UserAgent(context.Background(), platform, "stable", opts...)
+			switch {
+			case err != nil:
+				t.Fatalf("expected no error, got: %v", err)
+			case userAgent == "":
+				t.Errorf("expected non-empty user agent")
+			}
+			t.Logf("user agent: %v", userAgent)
+		})
 	}
-	t.Logf("user agent: %v", userAgent)
 }
 
 func platforms() []PlatformType {

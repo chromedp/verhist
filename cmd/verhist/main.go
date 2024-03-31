@@ -31,7 +31,7 @@ func run(ctx context.Context, w io.Writer, latest bool, platform, channel string
 		return verhist.ErrNoVersionsReturned
 	}
 	if latest {
-		_, err := fmt.Fprintf(w, "%s\n", versions[0].Version)
+		_, err := fmt.Fprintln(w, versions[0].Version)
 		return err
 	}
 	enc := json.NewEncoder(w)

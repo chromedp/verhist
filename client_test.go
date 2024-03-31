@@ -27,12 +27,17 @@ func TestChannels(t *testing.T) {
 	if os.Getenv("VERBOSE") != "" {
 		opts = append(opts, WithLogf(t.Logf))
 	}
-	channels, err := Channels(context.Background(), All, opts...)
-	if err != nil {
-		t.Fatalf("expected no error, got: %v", err)
-	}
-	for _, channel := range channels {
-		t.Logf("name: %s channel: %s", channel.Name, channel.ChannelType)
+	for _, typ := range platforms() {
+		t.Run(typ.String(), func(t *testing.T) {
+			t.Parallel()
+			channels, err := Channels(context.Background(), typ, opts...)
+			if err != nil {
+				t.Fatalf("expected no error, got: %v", err)
+			}
+			for _, channel := range channels {
+				t.Logf("name: %s channel: %s", channel.Name, channel.ChannelType)
+			}
+		})
 	}
 }
 
@@ -78,4 +83,24 @@ func TestUserAgent(t *testing.T) {
 		t.Errorf("expected non-empty user agent")
 	}
 	t.Logf("user agent: %v", userAgent)
+}
+
+func platforms() []PlatformType {
+	return []PlatformType{
+		All,
+		Android,
+		ChromeOS,
+		Fuchsia,
+		IOS,
+		LacrosARM32,
+		LacrosARM64,
+		Lacros,
+		Linux,
+		MacARM64,
+		Mac,
+		Webview,
+		Windows64,
+		WindowsARM64,
+		Windows,
+	}
 }

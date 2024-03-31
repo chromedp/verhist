@@ -115,20 +115,21 @@ type PlatformType string
 
 // Platform types.
 const (
-	All         PlatformType = "all"
-	Android     PlatformType = "android"
-	ChromeOS    PlatformType = "chromeos"
-	Fuchsia     PlatformType = "fuchsia"
-	IOS         PlatformType = "ios"
-	LacrosARM32 PlatformType = "lacros_arm32"
-	LacrosARM64 PlatformType = "lacros_arm64"
-	Lacros      PlatformType = "lacros"
-	Linux       PlatformType = "linux"
-	MacARM64    PlatformType = "mac_arm64"
-	Mac         PlatformType = "mac"
-	Webview     PlatformType = "webview"
-	Windows64   PlatformType = "win64"
-	Windows     PlatformType = "win"
+	All          PlatformType = "all"
+	Android      PlatformType = "android"
+	ChromeOS     PlatformType = "chromeos"
+	Fuchsia      PlatformType = "fuchsia"
+	IOS          PlatformType = "ios"
+	LacrosARM32  PlatformType = "lacros_arm32"
+	LacrosARM64  PlatformType = "lacros_arm64"
+	Lacros       PlatformType = "lacros"
+	Linux        PlatformType = "linux"
+	MacARM64     PlatformType = "mac_arm64"
+	Mac          PlatformType = "mac"
+	Webview      PlatformType = "webview"
+	Windows64    PlatformType = "win64"
+	WindowsARM64 PlatformType = "win_arm64"
+	Windows      PlatformType = "win"
 )
 
 // String satisfies the [fmt.Stinger] interface.
@@ -170,6 +171,8 @@ func (typ *PlatformType) UnmarshalText(buf []byte) error {
 		*typ = Webview
 	case Windows64:
 		*typ = Windows64
+	case WindowsARM64:
+		*typ = WindowsARM64
 	case Windows:
 		*typ = Windows
 	default:

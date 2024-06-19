@@ -77,14 +77,14 @@ func (cl *Client) Versions(ctx context.Context, platform, channel string, q ...s
 	return res.Versions, nil
 }
 
-// Latest veturns the latest version for the platform, channel.
+// Latest returns the latest version for the platform, channel.
 func (cl *Client) Latest(ctx context.Context, platform, channel string) (Version, error) {
 	versions, err := cl.Versions(ctx, platform, channel)
 	switch {
 	case err != nil:
 		return Version{}, err
 	case len(versions) == 0:
-		return Version{}, ErrNoVersionsReturned
+		return Version{}, ErrNoVersionsAvailable
 	}
 	return versions[0], nil
 }

@@ -30,7 +30,7 @@ func Versions(ctx context.Context, platform, channel string, opts ...Option) ([]
 	return New(opts...).Versions(ctx, platform, channel)
 }
 
-// Latest veturns the latest version for the platform, channel.
+// Latest returns the latest version for the platform, channel.
 func Latest(ctx context.Context, platform, channel string, opts ...Option) (Version, error) {
 	return New(opts...).Latest(ctx, platform, channel)
 }
@@ -56,6 +56,6 @@ const (
 	ErrInvalidChannelType Error = "invalid channel type"
 	// ErrInvalidQuery is the invalid query error.
 	ErrInvalidQuery Error = "invalid query"
-	// ErrNoVersionsReturned is the no versions returned error.
-	ErrNoVersionsReturned Error = "no versions returned"
+	// ErrNoVersionsAvailable is the no versions available error.
+	ErrNoVersionsAvailable Error = "no versions available"
 )

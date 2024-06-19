@@ -27,8 +27,8 @@ func run(ctx context.Context, w io.Writer, latest bool, platform, channel string
 	switch {
 	case err != nil:
 		return err
-	case len(versions) < 1:
-		return verhist.ErrNoVersionsReturned
+	case len(versions) == 0:
+		return verhist.ErrNoVersionsAvailable
 	}
 	if latest {
 		_, err := fmt.Fprintln(w, versions[0].Version)

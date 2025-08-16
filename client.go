@@ -285,14 +285,14 @@ func WithTransport(transport http.RoundTripper) Option {
 
 // WithLogf is a version history client option to set a log handler for HTTP
 // requests and responses.
-func WithLogf(logf interface{}, opts ...httplog.Option) Option {
+func WithLogf(logf any, opts ...httplog.Option) Option {
 	return func(cl *Client) {
 		cl.Transport = httplog.NewPrefixedRoundTripLogger(cl.Transport, logf, opts...)
 	}
 }
 
 // grab grabs the url and json decodes it.
-func grab(ctx context.Context, urlstr string, transport http.RoundTripper, v interface{}, q ...string) error {
+func grab(ctx context.Context, urlstr string, transport http.RoundTripper, v any, q ...string) error {
 	if len(q)%2 != 0 {
 		return ErrInvalidQuery
 	}

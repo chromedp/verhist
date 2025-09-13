@@ -6,6 +6,8 @@ package verhist
 
 import (
 	"context"
+	"runtime"
+	"strings"
 )
 
 /*
@@ -38,6 +40,24 @@ func Latest(ctx context.Context, platform, channel string, opts ...Option) (Vers
 // UserAgent builds the user agent for the platform, channel.
 func UserAgent(ctx context.Context, platform, channel string, opts ...Option) (string, error) {
 	return New(opts...).UserAgent(ctx, platform, channel)
+}
+
+// PlatformString returns the Chromium platform string for [runtime.GOOS].
+func PlatformString() string {
+	os, arm := strings.ToLower(runtime.GOOS), strings.HasPrefix(runtime.GOARCH, "arm")
+	switch {
+	case os == "windows" && arm:
+		return WindowsARM64.String()
+	case os == "windows" && runtime.GOARCH == "amd64":
+		return Windows64.String()
+	case os == "windows":
+		return Windows.String()
+	case os == "darwin" && arm:
+		return MacARM64.String()
+	case os == "darwin":
+		return Mac.String()
+	}
+	return Linux.String()
 }
 
 // Error is a error.
